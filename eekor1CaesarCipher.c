@@ -1,3 +1,8 @@
+/*
+*   Author: Ehiremen Ekore
+*   Started: 09/2018
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -7,7 +12,7 @@ void encryptAndPrintMessage(char secretMessage[], int messageLength);
 void decryptAndPrintMessage(char secretMessage[], int messageLength);
 
 int main() {
-
+    
     int menuOptionChosen, messageLength;
     char secretMessage[21];
 
@@ -34,6 +39,7 @@ int main() {
         }
     }
 
+    fclose(file);
     return 0;
 }
 
@@ -48,7 +54,7 @@ int inputMessageForProcessing(char secretMessage[]){
         messageLength = i;
     }
     FILE* file = fopen("inputs.txt", "a");
-    fprintf(file, "%s\n", secretMessage);
+    fprintf(file, "Message: %s\n", secretMessage);
 
     //calculate and return messageLength for use in other functions because... why not?
     return messageLength;
@@ -62,6 +68,9 @@ void encryptAndPrintMessage(char secretMessage[], int messageLength){
     printf("Encryption Key: ");
     scanf("%i", &encryptionKey);
 
+    fprintf(file, "Process: Encryption\n");
+    fprintf(file, "Key: %i\n", encryptionKey);
+    
     printf("Lord Caesar's cipher:");
     for(int i=0; i<(messageLength+1); i++){
         //force chars to uppercase in case Julius forgot to type in ALL CAPS
@@ -81,6 +90,7 @@ void encryptAndPrintMessage(char secretMessage[], int messageLength){
     printf("\n\n");
 }
 
+//Decryption can be achieved by negating encryptionKey in encryptandPrintMessage() as well
 void decryptAndPrintMessage(char secretMessage[], int messageLength){
     int decryptionKey;
     int cipherValue;
@@ -88,6 +98,9 @@ void decryptAndPrintMessage(char secretMessage[], int messageLength){
 
     printf("Decryption Key: ");
     scanf("%i", &decryptionKey);
+    
+    fprintf(file, "Process: Decryption\n");
+    fprintf(file, "Key: %i\n", decryptionKey);
 
     printf("Lord Caesar's message:");
     for(int i=0; i<(messageLength+1); i++){
